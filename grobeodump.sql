@@ -47,7 +47,7 @@ CREATE TABLE `buried` (
   CONSTRAINT `FKburied339861` FOREIGN KEY (`quarter_id`) REFERENCES `quarters` (`quarter_id`),
   CONSTRAINT `FKburied422751` FOREIGN KEY (`outfit_id`) REFERENCES `outfits` (`outfit_id`),
   CONSTRAINT `FKburied911363` FOREIGN KEY (`priest_id`, `temple_id`) REFERENCES `priests_temples` (`priest_id`, `temple_id`),
-  CONSTRAINT `FKburied996959` FOREIGN KEY (`container_id`) REFERENCES `containers` (`containter_id`)
+  CONSTRAINT `FKburied996959` FOREIGN KEY (`container_id`) REFERENCES `containers` (`container_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -149,12 +149,12 @@ DROP TABLE IF EXISTS `containers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `containers` (
-  `containter_id` int(10) NOT NULL AUTO_INCREMENT,
+  `container_id` int(10) NOT NULL AUTO_INCREMENT,
   `type` varchar(30) NOT NULL,
   `manufacturer` varchar(30) NOT NULL,
   `material` varchar(30) NOT NULL,
   `price` int(10) NOT NULL,
-  PRIMARY KEY (`containter_id`)
+  PRIMARY KEY (`container_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -230,6 +230,45 @@ INSERT INTO `funeral_homes` VALUES (1,'SKRABEX','dolnośląskie','Wrocław','Wro
 UNLOCK TABLES;
 
 --
+-- Temporary table structure for view `funeral_services_on_cemeteries`
+--
+
+DROP TABLE IF EXISTS `funeral_services_on_cemeteries`;
+/*!50001 DROP VIEW IF EXISTS `funeral_services_on_cemeteries`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `funeral_services_on_cemeteries` AS SELECT 
+ 1 AS `name`,
+ 1 AS `price`,
+ 1 AS `voivodeship`,
+ 1 AS `county`,
+ 1 AS `locality`,
+ 1 AS `street`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `funerals`
+--
+
+DROP TABLE IF EXISTS `funerals`;
+/*!50001 DROP VIEW IF EXISTS `funerals`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `funerals` AS SELECT 
+ 1 AS `first_name`,
+ 1 AS `last_name`,
+ 1 AS `tombstone_material`,
+ 1 AS `price`,
+ 1 AS `type`,
+ 1 AS `container_material`,
+ 1 AS `priest_name`,
+ 1 AS `priest_last_name`,
+ 1 AS `rank`,
+ 1 AS `locality`,
+ 1 AS `funeral_home`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `gravediggers`
 --
 
@@ -258,6 +297,22 @@ LOCK TABLES `gravediggers` WRITE;
 INSERT INTO `gravediggers` VALUES (1,'Dariusz','Łopata',2,2500,1),(2,'Mariusz','Szpadel',10,3000,2),(3,'Kamil','Kmieć',1,2200,3),(4,'Mateusz','Deska',20,3400,4),(5,'Łukasz','Gwóźdź',12,3200,5),(6,'Sebastian','Maciejewski',1,4000,6),(7,'Maciej','Henrykowski',0,3200,7);
 /*!40000 ALTER TABLE `gravediggers` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `most_popular_outfits`
+--
+
+DROP TABLE IF EXISTS `most_popular_outfits`;
+/*!50001 DROP VIEW IF EXISTS `most_popular_outfits`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `most_popular_outfits` AS SELECT 
+ 1 AS `count(outfit_id)`,
+ 1 AS `type`,
+ 1 AS `brand`,
+ 1 AS `size`,
+ 1 AS `color`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `outfits`
@@ -314,6 +369,22 @@ LOCK TABLES `priests` WRITE;
 INSERT INTO `priests` VALUES (1,'kardynał','Sędziwój Leszek','Słój','rzymskokatolicyzm',10000),(2,'arcybiskup','Janusz','Procesor','rzymskokatolicyzm',4000),(3,'arcybiskup','Paweł','Potężny','rzymskokatolicyzm',3000),(4,'archiprezbiter wiejski','Jan','Wawruszczak','rzymskokatolicyzm',600),(5,'doktor proboszcz','Piotr','Biernacki','rzymskokatolicyzm',700),(6,'proboszcz','Franciszek','Czosnek','rzymskokatolicyzm',400),(7,'proboszcz','Andrzej','Złociński','rzymskokatolicyzm',400),(8,'proboszcz','Eugeniusz','Machulski','rzymskokatolicyzm',950),(9,'prałat','Stanisław','Kanonik','rzymskokatolicyzm',450),(10,'wikariusz','Marian','Korwin','rzymskokatolicyzm',300),(11,'wikariusz','Damian','Jurek','rzymskokatolicyzm',500),(12,'wikariusz','Marek','Cukierberg','rzymskokatolicyzm',400),(13,'rabin','Mosze','Goldberg','judaizm',700),(14,'rabin','Mordechaj','Goldszmidt','judaizm',1000),(15,'rabin','Ozjasz','Szechter','judaizm',300),(16,'imam','Muhammad','Ali','islam',1000),(17,'imam','Saddam','Chomeini','islam',500);
 /*!40000 ALTER TABLE `priests` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `priests_and_temples`
+--
+
+DROP TABLE IF EXISTS `priests_and_temples`;
+/*!50001 DROP VIEW IF EXISTS `priests_and_temples`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `priests_and_temples` AS SELECT 
+ 1 AS `title`,
+ 1 AS `first_name`,
+ 1 AS `last_name`,
+ 1 AS `rank`,
+ 1 AS `locality`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `priests_temples`
@@ -430,6 +501,21 @@ INSERT INTO `tombstones` VALUES (1,'SteinPol','granit',1200),(2,'Tempus','granit
 UNLOCK TABLES;
 
 --
+-- Temporary table structure for view `top_tombstones`
+--
+
+DROP TABLE IF EXISTS `top_tombstones`;
+/*!50001 DROP VIEW IF EXISTS `top_tombstones`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `top_tombstones` AS SELECT 
+ 1 AS `count(tombstone_id)`,
+ 1 AS `material`,
+ 1 AS `price`,
+ 1 AS `manufacturer`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `vehicles`
 --
 
@@ -458,6 +544,96 @@ LOCK TABLES `vehicles` WRITE;
 INSERT INTO `vehicles` VALUES (1,'samochód','Mercedes','w212','czarny',1),(2,'samochód','Mercedes','vito','czarny',1),(3,'samochód','Mercedes','e250','czarny',2),(4,'samochód','Mercedes','w212','czarny',3),(5,'samochód','Opel','Vectra','niebieski',4),(6,'samochód','Volkswagen','Golf 3','butelkowy',5),(7,'lektyka','Sedia','bambus','bambusowy',3),(8,'dorożka','Glinkowsky','sattel','dębowy',3);
 /*!40000 ALTER TABLE `vehicles` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `funeral_services_on_cemeteries`
+--
+
+/*!50001 DROP VIEW IF EXISTS `funeral_services_on_cemeteries`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`admin`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `funeral_services_on_cemeteries` AS select distinct `f`.`name` AS `name`,`f`.`price` AS `price`,`c`.`voivodeship` AS `voivodeship`,`c`.`county` AS `county`,`c`.`locality` AS `locality`,`c`.`street` AS `street` from (((`cemeteries` `c` join `quarters` on((`c`.`cemetery_id` = `quarters`.`cemetery_id`))) join `buried` on((`quarters`.`quarter_id` = `buried`.`quarter_id`))) join `funeral_homes` `f` on((`buried`.`funeral_home_id` = `f`.`funeral_home_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `funerals`
+--
+
+/*!50001 DROP VIEW IF EXISTS `funerals`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`admin`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `funerals` AS select `b`.`first_name` AS `first_name`,`b`.`last_name` AS `last_name`,`tb`.`material` AS `tombstone_material`,`tb`.`price` AS `price`,`c`.`type` AS `type`,`c`.`material` AS `container_material`,`p`.`first_name` AS `priest_name`,`p`.`last_name` AS `priest_last_name`,`t`.`rank` AS `rank`,`t`.`locality` AS `locality`,`f`.`name` AS `funeral_home` from ((((((`buried` `b` join `quarters` `q` on((`b`.`quarter_id` = `q`.`quarter_id`))) join `tombstones` `tb` on((`q`.`tombstone_id` = `tb`.`tombstone_id`))) join `temples` `t` on((`b`.`temple_id` = `t`.`temple_id`))) join `priests` `p` on((`b`.`priest_id` = `p`.`priest_id`))) join `funeral_homes` `f` on((`b`.`funeral_home_id` = `f`.`funeral_home_id`))) join `containers` `c` on((`b`.`container_id` = `c`.`container_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `most_popular_outfits`
+--
+
+/*!50001 DROP VIEW IF EXISTS `most_popular_outfits`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`admin`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `most_popular_outfits` AS select count(`buried`.`outfit_id`) AS `count(outfit_id)`,`outfits`.`type` AS `type`,`outfits`.`brand` AS `brand`,`outfits`.`size` AS `size`,`outfits`.`color` AS `color` from (((`cemeteries` join `quarters` on((`cemeteries`.`cemetery_id` = `quarters`.`cemetery_id`))) join `buried` on((`quarters`.`quarter_id` = `buried`.`quarter_id`))) join `outfits` on((`buried`.`outfit_id` = `outfits`.`outfit_id`))) group by `outfits`.`type`,`outfits`.`brand`,`outfits`.`size`,`outfits`.`color` order by count(`buried`.`outfit_id`) desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `priests_and_temples`
+--
+
+/*!50001 DROP VIEW IF EXISTS `priests_and_temples`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`admin`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `priests_and_temples` AS select `priests`.`title` AS `title`,`priests`.`first_name` AS `first_name`,`priests`.`last_name` AS `last_name`,`temples`.`rank` AS `rank`,`temples`.`locality` AS `locality` from ((`priests_temples` join `priests` on((`priests_temples`.`priest_id` = `priests`.`priest_id`))) join `temples` on((`priests_temples`.`temple_id` = `temples`.`temple_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `top_tombstones`
+--
+
+/*!50001 DROP VIEW IF EXISTS `top_tombstones`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`admin`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `top_tombstones` AS select count(`quarters`.`tombstone_id`) AS `count(tombstone_id)`,`t`.`material` AS `material`,`t`.`price` AS `price`,`t`.`manufacturer` AS `manufacturer` from ((`cemeteries` join `quarters` on((`cemeteries`.`cemetery_id` = `quarters`.`cemetery_id`))) join `tombstones` `t` on((`quarters`.`tombstone_id` = `t`.`tombstone_id`))) group by `t`.`manufacturer`,`t`.`material`,`t`.`price` order by count(`quarters`.`tombstone_id`) desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -468,4 +644,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-22 15:18:43
+-- Dump completed on 2019-05-22 19:16:04
