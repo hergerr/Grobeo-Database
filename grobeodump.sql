@@ -442,11 +442,13 @@ DROP TABLE IF EXISTS `most_popular_outfits`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `most_popular_outfits` AS SELECT 
- 1 AS `count(outfit_id)`,
+ 1 AS `outfit_id`,
+ 1 AS `num_of_outfits`,
  1 AS `type`,
  1 AS `brand`,
  1 AS `size`,
- 1 AS `color`*/;
+ 1 AS `color`,
+ 1 AS `price`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -514,11 +516,16 @@ DROP TABLE IF EXISTS `priests_and_temples`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `priests_and_temples` AS SELECT 
+ 1 AS `priest_id`,
  1 AS `title`,
  1 AS `first_name`,
  1 AS `last_name`,
+ 1 AS `religion`,
+ 1 AS `temple_id`,
  1 AS `rank`,
- 1 AS `locality`*/;
+ 1 AS `locality`,
+ 1 AS `capacity`,
+ 1 AS `price`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -644,10 +651,11 @@ DROP TABLE IF EXISTS `top_tombstones`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `top_tombstones` AS SELECT 
- 1 AS `count(tombstone_id)`,
+ 1 AS `tombstone_id`,
+ 1 AS `num_of_tombstones`,
+ 1 AS `manufacturer`,
  1 AS `material`,
- 1 AS `price`,
- 1 AS `manufacturer`*/;
+ 1 AS `price`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -789,7 +797,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`admin`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `most_popular_outfits` AS select count(`buried`.`outfit_id`) AS `count(outfit_id)`,`outfits`.`type` AS `type`,`outfits`.`brand` AS `brand`,`outfits`.`size` AS `size`,`outfits`.`color` AS `color` from (((`cemeteries` join `quarters` on((`cemeteries`.`cemetery_id` = `quarters`.`cemetery_id`))) join `buried` on((`quarters`.`quarter_id` = `buried`.`quarter_id`))) join `outfits` on((`buried`.`outfit_id` = `outfits`.`outfit_id`))) group by `outfits`.`type`,`outfits`.`brand`,`outfits`.`size`,`outfits`.`color` order by count(`buried`.`outfit_id`) desc */;
+/*!50001 VIEW `most_popular_outfits` AS select `buried`.`outfit_id` AS `outfit_id`,count(`buried`.`outfit_id`) AS `num_of_outfits`,`o`.`type` AS `type`,`o`.`brand` AS `brand`,`o`.`size` AS `size`,`o`.`color` AS `color`,`o`.`price` AS `price` from (((`cemeteries` join `quarters` on((`cemeteries`.`cemetery_id` = `quarters`.`cemetery_id`))) join `buried` on((`quarters`.`quarter_id` = `buried`.`quarter_id`))) join `outfits` `o` on((`buried`.`outfit_id` = `o`.`outfit_id`))) group by `buried`.`outfit_id`,`o`.`type`,`o`.`brand`,`o`.`size`,`o`.`color` order by count(`buried`.`outfit_id`) desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -807,7 +815,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`admin`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `priests_and_temples` AS select `priests`.`title` AS `title`,`priests`.`first_name` AS `first_name`,`priests`.`last_name` AS `last_name`,`temples`.`rank` AS `rank`,`temples`.`locality` AS `locality` from ((`priests_temples` join `priests` on((`priests_temples`.`priest_id` = `priests`.`priest_id`))) join `temples` on((`priests_temples`.`temple_id` = `temples`.`temple_id`))) */;
+/*!50001 VIEW `priests_and_temples` AS select `priests_temples`.`priest_id` AS `priest_id`,`priests`.`title` AS `title`,`priests`.`first_name` AS `first_name`,`priests`.`last_name` AS `last_name`,`priests`.`religion` AS `religion`,`priests_temples`.`temple_id` AS `temple_id`,`temples`.`rank` AS `rank`,`temples`.`locality` AS `locality`,`temples`.`capacity` AS `capacity`,`priests`.`price` AS `price` from ((`priests_temples` join `priests` on((`priests_temples`.`priest_id` = `priests`.`priest_id`))) join `temples` on((`priests_temples`.`temple_id` = `temples`.`temple_id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -825,7 +833,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`admin`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `top_tombstones` AS select count(`quarters`.`tombstone_id`) AS `count(tombstone_id)`,`t`.`material` AS `material`,`t`.`price` AS `price`,`t`.`manufacturer` AS `manufacturer` from ((`cemeteries` join `quarters` on((`cemeteries`.`cemetery_id` = `quarters`.`cemetery_id`))) join `tombstones` `t` on((`quarters`.`tombstone_id` = `t`.`tombstone_id`))) group by `t`.`manufacturer`,`t`.`material`,`t`.`price` order by count(`quarters`.`tombstone_id`) desc */;
+/*!50001 VIEW `top_tombstones` AS select `t`.`tombstone_id` AS `tombstone_id`,count(`quarters`.`tombstone_id`) AS `num_of_tombstones`,`t`.`manufacturer` AS `manufacturer`,`t`.`material` AS `material`,`t`.`price` AS `price` from ((`cemeteries` join `quarters` on((`cemeteries`.`cemetery_id` = `quarters`.`cemetery_id`))) join `tombstones` `t` on((`quarters`.`tombstone_id` = `t`.`tombstone_id`))) group by `t`.`tombstone_id`,`t`.`manufacturer`,`t`.`material`,`t`.`price` order by count(`quarters`.`tombstone_id`) desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -839,4 +847,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-27  9:37:33
+-- Dump completed on 2019-05-27 14:10:21
