@@ -48,7 +48,7 @@ CREATE TABLE `buried` (
   CONSTRAINT `FKburied422751` FOREIGN KEY (`outfit_id`) REFERENCES `outfits` (`outfit_id`),
   CONSTRAINT `FKburied911363` FOREIGN KEY (`priest_id`, `temple_id`) REFERENCES `priests_temples` (`priest_id`, `temple_id`),
   CONSTRAINT `FKburied996959` FOREIGN KEY (`container_id`) REFERENCES `containers` (`container_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -681,6 +681,66 @@ INSERT INTO `vehicles` VALUES (1,'samochód','Mercedes','w212','czarny',1),(2,'s
 UNLOCK TABLES;
 
 --
+-- Dumping routines for database 'grobeoDB'
+--
+/*!50003 DROP FUNCTION IF EXISTS `suggest_priest` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`admin`@`%` FUNCTION `suggest_priest`(price_limit int(10), priest_price int(10)) RETURNS varchar(30) CHARSET latin1
+    DETERMINISTIC
+BEGIN
+    DECLARE can_afforrd varchar(30);
+ 
+    IF price_limit >= priest_price THEN
+ SET can_afforrd = 'STAC CIE';
+    ELSEIF price_limit < priest_price THEN
+        SET can_afforrd = 'LEPIEJ ODPUSC';
+    END IF;
+ 
+ RETURN (can_afforrd);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `suggest_quarter` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`admin`@`%` FUNCTION `suggest_quarter`(price_limit int(10), quarter_price int(10)) RETURNS varchar(30) CHARSET latin1
+    DETERMINISTIC
+BEGIN
+    DECLARE can_afforrd varchar(30);
+ 
+    IF price_limit >= quarter_price THEN
+ SET can_afforrd = 'STAC CIE';
+    ELSEIF price_limit < quarter_price THEN
+        SET can_afforrd = 'LEPIEJ ODPUSC';
+    END IF;
+ 
+ RETURN (can_afforrd);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
 -- Final view structure for view `funeral_services_on_cemeteries`
 --
 
@@ -779,4 +839,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-26 23:19:21
+-- Dump completed on 2019-05-27  9:37:33
